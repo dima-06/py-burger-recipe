@@ -7,7 +7,7 @@ class Validator(ABC):
         self.protected_name = "_" + name
 
     def __get__(self, instance: Any, owner: Any) -> None:
-        return getattr(instance, self.protected_name, None)
+        return getattr(instance, self.protected_name)
 
     def __set__(self, instance: Any, value: int) -> None:
         self.validate(value)
@@ -36,7 +36,7 @@ class OneOf(Validator):
     def __init__(self, options: tuple) -> None:
         self.options = options
 
-    def validate(self, value: int) -> None:
+    def validate(self, value: str) -> None:
         if value not in self.options:
             raise ValueError(f"Expected {value} to be one of {self.options}.")
 
